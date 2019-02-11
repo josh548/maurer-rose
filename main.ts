@@ -1,3 +1,14 @@
+const canvas: HTMLCanvasElement = document.querySelector("canvas")!;
+canvas.width = window.innerWidth / window.devicePixelRatio;
+canvas.height = window.innerHeight / window.devicePixelRatio;
+
+const computedWidth: number = +getComputedStyle(canvas).getPropertyValue("width").slice(0, -2);
+const computedHeight: number = +getComputedStyle(canvas).getPropertyValue("height").slice(0, -2);
+canvas.setAttribute("width", `${computedWidth * window.devicePixelRatio}px`);
+canvas.setAttribute("height", `${computedHeight * window.devicePixelRatio}px`);
+
+const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
+
 function convertDegreesToRadians(degrees: number): number {
     return degrees * (Math.PI / 180);
 }
@@ -112,7 +123,7 @@ class MaurerRose {
         this.previousX = x;
         this.previousY = y;
         this.k += this.d;
-        this.i++;
+        this.i += 1;
     }
 
     public isComplete(): boolean {
@@ -120,27 +131,21 @@ class MaurerRose {
     }
 }
 
-window.onload = (): void => {
-    const canvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
-    const context: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
-    const width: number = canvas.width = window.innerWidth;
-    const height: number = canvas.height = window.innerHeight;
-    context.translate(width / 2, height / 2);
-    context.scale(1, -1);
-    const radius: number = Math.min(width, height) * 0.45;
-    const maurerRose: MaurerRose = new MaurerRose(context, 0, 0, radius, 6, 71);
-    const rose: Rose = new Rose(context, 0, 0, radius, 6, 0.02);
-    function renderMaurerRose(): void {
-        maurerRose.render();
-        if (maurerRose.isComplete()) {
-            renderRose();
-        } else {
-            requestAnimationFrame(renderMaurerRose);
-        }
+ctx.translate(canvas.width / 2, canvas.height / 2);
+ctx.scale(1, -1);
+const roseRadius: number = Math.min(canvas.width, canvas.height) * 0.45;
+const maurerRose: MaurerRose = new MaurerRose(ctx, 0, 0, roseRadius, 6, 71);
+const rose: Rose = new Rose(ctx, 0, 0, roseRadius, 6, 0.02);
+function renderMaurerRose(): void {
+    maurerRose.render();
+    if (maurerRose.isComplete()) {
+        renderRose();
+    } else {
+        requestAnimationFrame(renderMaurerRose);
     }
-    function renderRose(): void {
-        rose.render();
-        requestAnimationFrame(renderRose);
-    }
-    renderMaurerRose();
-};
+}
+function renderRose(): void {
+    rose.render();
+    requestAnimationFrame(renderRose);
+}
+renderMaurerRose();
