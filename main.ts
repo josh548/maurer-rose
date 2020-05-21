@@ -1,3 +1,4 @@
+// tslint:disable: max-classes-per-file
 const canvas: HTMLCanvasElement = document.querySelector("canvas")!;
 canvas.width = window.innerWidth / window.devicePixelRatio;
 canvas.height = window.innerHeight / window.devicePixelRatio;
