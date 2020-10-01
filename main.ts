@@ -1,4 +1,5 @@
 // tslint:disable: max-classes-per-file
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const canvas: HTMLCanvasElement = document.querySelector("canvas")!;
 canvas.width = window.innerWidth / window.devicePixelRatio;
 canvas.height = window.innerHeight / window.devicePixelRatio;
@@ -8,6 +9,7 @@ const computedHeight: number = +getComputedStyle(canvas).getPropertyValue("heigh
 canvas.setAttribute("width", `${computedWidth * window.devicePixelRatio}px`);
 canvas.setAttribute("height", `${computedHeight * window.devicePixelRatio}px`);
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
 
 function convertDegreesToRadians(degrees: number): number {
@@ -24,10 +26,10 @@ class Rose {
     private readonly centerY: number;
     private readonly amplitude: number;
     private readonly k: number;
-    private theta: number = 0;
+    private theta = 0;
     private readonly deltaTheta: number;
-    private previousX: number = 0;
-    private previousY: number = 0;
+    private previousX = 0;
+    private previousY = 0;
 
     /**
      * @param centerX The x value of the center of the rose.
@@ -83,8 +85,8 @@ class MaurerRose {
     private readonly amplitude: number;
     private readonly n: number;
     private readonly d: number;
-    private k: number = 0;
-    private i: number = 0;
+    private k = 0;
+    private i = 0;
     private previousX: number;
     private previousY: number;
 
