@@ -1,4 +1,3 @@
-// tslint:disable: max-classes-per-file
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const canvas: HTMLCanvasElement = document.querySelector("canvas")!;
 canvas.width = window.innerWidth / window.devicePixelRatio;
